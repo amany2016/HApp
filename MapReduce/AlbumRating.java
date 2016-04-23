@@ -34,7 +34,7 @@ public class AlbumRating extends Configured implements Tool {
 
 
   public int run(String[] args) throws Exception {
-    Job job = Job.getInstance(getConf(), "top_post");
+    Job job = Job.getInstance(getConf(), "AlbumRating");
     job.setJarByClass(this.getClass());
 
 
