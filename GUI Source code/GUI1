@@ -1,0 +1,412 @@
+import java.awt.EventQueue;
+
+
+
+
+	public class GUI1 extends JFrame {
+
+		private JPanel contentPane;
+		private JTextField SongIDTextField;
+		private JButton GetRating;
+		private JButton GetArtist;
+		private JButton GetAlbum;
+		private JScrollPane scrollPane;
+		private JTable table;
+
+		private SongDB songDB;
+		private SongavgDB songavgDB;
+		private JLabel label;
+		private JLabel label_1;
+		private JTextField ArtistTextField;
+		private JTextField AlbumTextField;
+		private ArtistDB artistDB;
+		private AlbumDB albumDB; //calls the database connector class
+		private AlbumavgDB albumavgDB;
+		private ArtistavgDB artistavgDB;
+		private JTextField SongAvgTextField;
+		private JTextField ArtistAvgTextField;
+		private JTextField AlbumAvgTextField;
+		
+		
+		public static void main(String[] args) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						GUI1 frame = new GUI1();
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+		}
+
+		
+		public GUI1() {
+			
+			
+			try {
+				songDB = new SongDB();
+			} catch (Exception exc) {
+				JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+			}
+			
+			
+			try {
+				artistDB = new ArtistDB();
+			}catch (Exception exc) {
+					JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE);
+					
+				}
+			try {
+				albumDB = new AlbumDB();
+			} catch (Exception exc) {
+				JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); // Create an instance of the database connector class in the GUI class
+			}
+			
+			
+			try {
+				artistavgDB = new ArtistavgDB();
+			} catch (Exception exc) {
+				JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+				
+				
+			}
+			
+			try {
+				albumavgDB = new AlbumavgDB();
+			} catch (Exception exc) {
+				JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+				
+		
+			}
+			
+			try {
+				songavgDB = new SongavgDB();
+			} catch (Exception exc) {
+				JOptionPane.showMessageDialog(this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+				
+		
+			}
+			
+		
+			
+			setTitle("Song Rating");
+			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			setBounds(200, 200, 650, 500);
+			contentPane = new JPanel();
+			contentPane.setBorder(new EmptyBorder(7, 7, 7, 7));
+			setContentPane(contentPane);
+			contentPane.setLayout(null);
+			
+			JPanel panel = new JPanel();
+			panel.setBounds(13, 12, 570, 114);
+			contentPane.add(panel);
+			
+			JLabel lblEnterSongid = new JLabel("Song");
+			
+			
+			
+			SongIDTextField = new JTextField();
+			SongIDTextField.setColumns(10);
+			
+			GetRating = new JButton("Search");
+			GetRating.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+								
+					
+					
+					try {
+						String idsong = SongIDTextField.getText();
+
+						List<Song> songs = null;
+
+						if (idsong != null && idsong.trim().length() > 0) {
+							songs = songDB.searchSongs(idsong);
+						} else {
+							songs = songDB.getAllSongs();
+						}
+						
+						
+						SongTableModel model = new SongTableModel(songs);
+						
+						table.setModel(model);
+						
+						
+					} catch (Exception exc) {
+						JOptionPane.showMessageDialog(GUI1.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					}
+					
+				}
+			});
+			
+			ArtistTextField = new JTextField();
+			ArtistTextField.setColumns(10);
+			
+			JLabel lblNewLabel = new JLabel("Artist");
+			
+			JLabel lblNewLabel_1 = new JLabel("Album");
+			
+			GetArtist = new JButton("Search");
+			GetArtist.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+						
+						
+						try {
+							String artistid = ArtistTextField.getText();
+
+							List<Artist> artists = null;
+
+							if (artistid != null && artistid.trim().length() > 0) {
+								artists = artistDB.searchArtists(artistid);
+							} else {
+								artists = artistDB.getAllArtists();
+							}
+							
+							
+							ArtistTableModel model = new ArtistTableModel(artists);
+							
+							table.setModel(model);
+							
+							
+						} catch (Exception exc) {
+							JOptionPane.showMessageDialog(GUI1.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+						}
+						
+					}
+				});
+					
+		
+					
+					
+			
+			
+			 GetAlbum = new JButton("Search");
+			GetAlbum.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					try {
+						String albumid = AlbumTextField.getText(); //Get album id from the text field
+
+						List<Album> albums = null; //Create an empty list for the data specified in Album class
+
+						if (albumid != null && albumid.trim().length() > 0) { //if the text field for album id is not empty, return list from search albums method based on the specified query and parameter
+							albums = albumDB.searchAlbums(albumid);
+						} else {                                                 // otherwise call the getAllAlbums method to return the "Select * from Album" query results 
+							albums = albumDB.getAllAlbums();
+						}
+						
+						
+						AlbumTableModel model = new AlbumTableModel(albums);  //pass in the model as specified in AlbumTableModel class
+						
+						table.setModel(model);
+						
+						
+					} catch (Exception exc) {
+						JOptionPane.showMessageDialog(GUI1.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					}
+					
+				}
+			});
+			
+			AlbumTextField = new JTextField();
+			AlbumTextField.setColumns(10);
+			
+			SongAvgTextField = new JTextField();
+			SongAvgTextField.setColumns(10);
+			
+			ArtistAvgTextField = new JTextField();
+			ArtistAvgTextField.setColumns(10);
+			
+			AlbumAvgTextField = new JTextField();
+			AlbumAvgTextField.setColumns(10);
+			
+			JButton btnGetAverage = new JButton("Get Average");
+			btnGetAverage.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					try {
+						String idartist = ArtistAvgTextField.getText();
+
+						List<Artistavg> artistavgs = null;
+
+						if (idartist != null && idartist.trim().length() > 0) {
+							artistavgs = artistavgDB.searchArtistavgs(idartist);
+						} else {
+							artistavgs = artistavgDB.getAllArtistavgs();
+						}
+						
+						
+						ArtistTableModelavg model = new ArtistTableModelavg(artistavgs);
+						
+						table.setModel(model);
+						
+						
+					} catch (Exception exc) {
+						JOptionPane.showMessageDialog(GUI1.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					}
+					
+				}
+			});
+					
+					
+					
+			
+			
+			JButton btnGetAverage_1 = new JButton("Get Average");
+			btnGetAverage_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					try {
+						String idalbum = AlbumAvgTextField.getText();
+
+						List<Albumavg> albumavgs = null;
+
+						if (idalbum != null && idalbum.trim().length() > 0) {
+							albumavgs = albumavgDB.searchAlbumavgs(idalbum);
+						} else {
+							albumavgs = albumavgDB.getAllAlbumavgs();
+						}
+						
+						
+						AlbumTableModelavg model = new AlbumTableModelavg(albumavgs);
+						
+						table.setModel(model);
+						
+						
+					} catch (Exception exc) {
+						JOptionPane.showMessageDialog(GUI1.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					}
+					
+				}
+			});
+			
+			JButton btnGetAverage_2 = new JButton("Get Average");
+			btnGetAverage_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					
+					
+					try {
+						String song = SongAvgTextField.getText();
+
+						List<Songavg> songavgs = null;
+
+						if (song != null && song.trim().length() > 0) {
+							songavgs = songavgDB.searchSongavgs(song);
+						} else {
+							songavgs = songavgDB.getAllSongavgs();
+						}
+						
+						
+						SongTableModelavg model = new SongTableModelavg(songavgs);
+						
+						table.setModel(model);
+						
+						
+					} catch (Exception exc) {
+						JOptionPane.showMessageDialog(GUI1.this, "Error: " + exc, "Error", JOptionPane.ERROR_MESSAGE); 
+					}
+					
+				}
+			});
+					
+					
+					
+					
+				
+				
+			
+				
+					
+					
+					
+					
+					
+					
+					
+			
+			GroupLayout gl_panel = new GroupLayout(panel);
+			gl_panel.setHorizontalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addContainerGap()
+						.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+							.addComponent(lblNewLabel)
+							.addComponent(lblNewLabel_1)
+							.addComponent(lblEnterSongid))
+						.addPreferredGap(ComponentPlacement.UNRELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addComponent(AlbumTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(SongIDTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(ArtistTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addComponent(GetRating)
+							.addComponent(GetArtist)
+							.addComponent(GetAlbum))
+						.addGap(40)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(AlbumAvgTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnGetAverage_1))
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(ArtistAvgTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnGetAverage))
+							.addGroup(gl_panel.createSequentialGroup()
+								.addComponent(SongAvgTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGap(18)
+								.addComponent(btnGetAverage_2)))
+						.addGap(5))
+			);
+			gl_panel.setVerticalGroup(
+				gl_panel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_panel.createSequentialGroup()
+						.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblEnterSongid)
+							.addComponent(SongIDTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(GetRating)
+							.addComponent(SongAvgTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnGetAverage_2))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(GetArtist)
+								.addComponent(ArtistAvgTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnGetAverage))
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewLabel)
+								.addComponent(ArtistTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblNewLabel_1)
+								.addComponent(AlbumTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(GetAlbum))
+							.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(AlbumAvgTextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnGetAverage_1)))
+						.addContainerGap(27, Short.MAX_VALUE))
+			);
+			panel.setLayout(gl_panel);
+			
+			label = new JLabel("");
+			label.setBounds(493, 70, 0, 0);
+			contentPane.add(label);
+			
+			label_1 = new JLabel("");
+			label_1.setBounds(505, 70, 0, 0);
+			contentPane.add(label_1);
+			
+			scrollPane = new JScrollPane();
+			scrollPane.setBounds(21, 133, 562, 326);
+			contentPane.add(scrollPane);
+			
+			table = new JTable();
+			scrollPane.setViewportView(table);
+		}
+	}
+
+

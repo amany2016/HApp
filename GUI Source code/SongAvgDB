@@ -1,0 +1,126 @@
+
+
+	
+	
+	import java.util.*;
+	import java.sql.*;
+	import java.io.*;
+	
+
+	
+	public class SongavgDB {
+	
+
+		private Connection myConn;
+		
+		public SongavgDB() throws Exception {
+			
+			// get db properties
+			Properties props = new Properties();
+			props.load(new FileInputStream("DatabaseConfig"));
+			
+			String user = props.getProperty("user");
+			String password = props.getProperty("password");
+			String dburl = props.getProperty("dburl");
+			
+			// connect to database
+			myConn = DriverManager.getConnection(dburl, user, password);
+			
+			System.out.println("DB connection successful to: " + dburl);
+		}
+		
+		
+		
+		
+		public List<Songavg> getAllSongavgs() throws Exception {
+			List<Songavg> list = new ArrayList<>();
+			
+			Statement myStmt = null;
+			ResultSet myRs = null;
+			
+			try {
+				myStmt = myConn.createStatement();
+				myRs = myStmt.executeQuery("select * from song");
+				
+				while (myRs.next()) {
+					Songavg tempSongavg = convertRowToSongavg(myRs);
+					list.add(tempSongavg);
+				}
+
+				return list;		
+			}
+			finally {
+				close(myStmt, myRs);
+			}
+		}
+		
+		public List<Songavg> searchSongavgs(String song) throws Exception {
+			List<Songavg> list = new ArrayList<>();
+
+			PreparedStatement myStmt = null;
+			ResultSet myRs = null;
+
+			try {
+				song += "%";
+				myStmt = myConn.prepareStatement("select * from song where song = ?");
+				
+				myStmt.setString(1, song);
+				
+				myRs = myStmt.executeQuery();
+				
+				while (myRs.next()) {
+					Songavg tempSongavg = convertRowToSongavg(myRs);
+					list.add(tempSongavg);
+				}
+				
+				return list;
+			}
+			finally {
+				close(myStmt, myRs);
+			}
+		}
+		
+		
+		
+		
+		
+private Songavg convertRowToSongavg(ResultSet myRs) throws SQLException {
+			
+			String song = myRs.getString("song");
+			String rating = myRs.getString("rating");
+			
+			
+			
+			Songavg tempSongavg = new Songavg(song, rating);
+			
+			return tempSongavg;
+
+}
+		private static void close(Connection myConn, Statement myStmt, ResultSet myRs)
+				throws SQLException {
+
+			if (myRs != null) {
+				myRs.close();
+			}
+
+			if (myStmt != null) {
+				
+			}
+			
+			if (myConn != null) {
+				myConn.close();
+			}
+		}
+
+		private void close(Statement myStmt, ResultSet myRs) throws SQLException {
+			close(null, myStmt, myRs);		
+		}
+
+	
+	}
+	
+	
+
+
+
+

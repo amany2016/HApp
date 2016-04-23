@@ -1,0 +1,67 @@
+
+	
+	import java.util.List;
+
+	import javax.swing.table.AbstractTableModel;
+
+	//TableModel allows data to be passed to the JTable in the GUI
+
+	class AlbumTableModel extends AbstractTableModel {
+//Define positions for column names
+		private static final int Idsong_COL = 0;
+		private static final int Rate_COL = 1;
+		private static final int Artistid_COL = 2;
+		private static final int Albumid_COL = 3;
+		
+
+		private String[] columnNames = { "idsong", "rate", "artistid", "albumid" };//Define column names
+		private List<Album> albums;
+		
+//reference for the Album List to be returned
+		public AlbumTableModel(List<Album> thealbums) {
+			albums = thealbums;
+			
+			
+			}
+		
+//Define column numbers
+		@Override
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+//define row numbers based on Album list
+		@Override
+		public int getRowCount() {
+			return albums.size();
+		}
+//Get name of each column based on  columnnames above
+		@Override
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+//Get the data value for a row and column
+		@Override
+		public Object getValueAt(int row, int col) {
+
+			Album tempAlbum = albums.get(row);
+
+			switch (col) {
+			case Idsong_COL:
+				return tempAlbum.getIdsong();
+			case Rate_COL:
+				return tempAlbum.getRate();
+			case Artistid_COL:
+				return tempAlbum.getArtistid();
+			case Albumid_COL:
+				return tempAlbum.getAlbumid();
+			
+			default:
+				return tempAlbum.getAlbumid();
+			}
+		}
+
+		
+		}
+	
+
+	

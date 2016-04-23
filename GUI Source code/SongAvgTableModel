@@ -1,0 +1,66 @@
+
+
+
+	import java.util.List;
+
+	import javax.swing.table.AbstractTableModel;
+
+	
+
+	class SongTableModelavg extends AbstractTableModel {
+
+		private static final int Song_COL = 0;
+		private static final int Rating_COL = 1;
+		
+		
+
+		private String[] columnNames = { "song", "rating" };
+		private List<Songavg> songavgs;
+		
+
+		public SongTableModelavg(List<Songavg> thesongavgs) {
+			songavgs = thesongavgs;
+			
+			
+			}
+		
+
+		@Override
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+
+		@Override
+		public int getRowCount() {
+			return songavgs.size();
+		}
+
+		@Override
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+
+		@Override
+		public Object getValueAt(int row, int col) {
+
+			Songavg tempSongavg = songavgs.get(row);
+
+			switch (col) {
+			case Song_COL:
+				return tempSongavg.getSong();
+			case Rating_COL:
+				return tempSongavg.getRating();
+			
+			
+			default:
+				return tempSongavg.getSong();
+			}
+		}
+
+		
+	}
+	
+	
+	
+
+

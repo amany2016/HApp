@@ -1,0 +1,69 @@
+
+
+	
+
+	import java.util.List;
+
+	import javax.swing.table.AbstractTableModel;
+
+	
+
+	class AlbumTableModelavg extends AbstractTableModel {
+
+		private static final int Idalbum_COL = 0;
+		private static final int Rating_COL = 1;
+		
+		
+
+		private String[] columnNames = { "idalbum", "rating" };
+		private List<Albumavg> albumavgs;
+		
+
+		public AlbumTableModelavg(List<Albumavg> thealbumavgs) {
+			albumavgs = thealbumavgs;
+			
+			
+			}
+		
+
+		@Override
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+
+		@Override
+		public int getRowCount() {
+			return albumavgs.size();
+		}
+
+		@Override
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+
+		@Override
+		public Object getValueAt(int row, int col) {
+
+			Albumavg tempAlbumavg = albumavgs.get(row);
+
+			switch (col) {
+			case Idalbum_COL:
+				return tempAlbumavg.getIdalbum();
+			case Rating_COL:
+				return tempAlbumavg.getRating();
+			
+			
+			default:
+				return tempAlbumavg.getIdalbum();
+			}
+		}
+
+		
+		}
+	
+
+	
+	
+	
+
+

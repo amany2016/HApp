@@ -1,0 +1,57 @@
+
+
+	
+	
+	public class Albumavg {
+		
+		private String idalbum;
+		private String rating;
+		
+		
+		
+		public Albumavg(String idalbum, String rating) {
+			super();
+			this.idalbum = idalbum;
+			this.rating = rating;
+			
+
+		}
+
+		public String getIdalbum() {
+			return idalbum;
+		}
+
+		public void setIdalbum(String idalbum) {
+			this.idalbum = idalbum;
+		}
+
+		public String getRating() {
+			return rating;
+		}
+
+		public void setRating(String rating) {
+			this.rating = rating;
+		}
+		
+		
+		
+		
+		
+		
+
+
+		
+		@Override
+		public String toString() {
+			return String
+					.format("Albumavg [idalbum=%s, rating=%s]",
+							idalbum, rating);
+		}
+		
+		
+			
+	}
+
+
+
+

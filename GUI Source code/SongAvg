@@ -1,0 +1,57 @@
+
+
+	
+	
+public class Songavg {
+		
+		private String song;
+		private String rating;
+		
+		
+		
+		public Songavg(String song, String rating) {
+			super();
+			this.song = song;
+			this.rating = rating;
+			
+
+		}
+
+		public String getSong() {
+			return song;
+		}
+
+		public void setSong(String song) {
+			this.song = song;
+		}
+
+		public String getRating() {
+			return rating;
+		}
+
+		public void setRating(String rating) {
+			this.rating = rating;
+		}
+		
+		
+		
+		
+		
+		
+
+
+		
+		@Override
+		public String toString() {
+			return String
+					.format("Songavg [song=%s, rating=%s]",
+							song, rating);
+		}
+		
+		
+			
+	}
+
+
+
+

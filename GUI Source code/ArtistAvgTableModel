@@ -1,0 +1,68 @@
+
+
+
+	import java.util.List;
+
+	import javax.swing.table.AbstractTableModel;
+
+	
+
+	class ArtistTableModelavg extends AbstractTableModel {
+
+		private static final int Idartist_COL = 0;
+		private static final int Rating_COL = 1;
+		
+		
+
+		private String[] columnNames = { "idartist", "rating" };
+		private List<Artistavg> artistavgs;
+		
+
+		public ArtistTableModelavg(List<Artistavg> theartistavgs) {
+			artistavgs = theartistavgs;
+			
+			
+			}
+		
+
+		@Override
+		public int getColumnCount() {
+			return columnNames.length;
+		}
+
+		@Override
+		public int getRowCount() {
+			return artistavgs.size();
+		}
+
+		@Override
+		public String getColumnName(int col) {
+			return columnNames[col];
+		}
+
+		@Override
+		public Object getValueAt(int row, int col) {
+
+			Artistavg tempArtistavg = artistavgs.get(row);
+
+			switch (col) {
+			case Idartist_COL:
+				return tempArtistavg.getIdartist();
+			case Rating_COL:
+				return tempArtistavg.getRating();
+			
+			
+			default:
+				return tempArtistavg.getIdartist();
+			}
+		}
+
+		
+		}
+	
+
+	
+	
+	
+
+

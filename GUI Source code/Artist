@@ -1,0 +1,78 @@
+
+public class Artist {
+	
+	
+
+		private String idsong;
+		private String rate;
+		private String artistid;
+		private String albumid;
+		
+		
+		public Artist(String idsong, String rate, String artistid, String albumid) {
+			super();
+			this.idsong = idsong;
+			this.rate = rate;
+			this.artistid = artistid;
+			this.albumid = albumid;
+	
+		}
+
+		public String getIdsong() {
+			return idsong;
+		}
+
+		public void setIdsong(String idsong) {
+			this.idsong = idsong;
+		}
+
+		public String getRate() {
+			return rate;
+		}
+
+		public void setRate(String rate) {
+			this.rate = rate;
+		}
+		
+		public String getArtistid() {
+			return artistid;
+	
+		}
+		
+		public void setArtistid(String artistid) {
+			this.artistid = artistid;
+			
+		}
+			
+			public String getAlbumid() {
+				return albumid;
+		
+			}
+			
+	
+		
+		public void setAlbumid(String albumid) {
+			this.albumid = albumid;
+		}
+		
+		
+		
+	
+
+		
+		@Override
+		public String toString() {
+			return String
+					.format("Artist [idsong=%s, rate=%s, artistid=%s, albumid=%s]",
+							idsong, rate, artistid, albumid);
+		}
+		
+		
+			
+	}
+
+
+
+
+
+

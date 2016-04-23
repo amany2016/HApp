@@ -1,0 +1,53 @@
+
+public class Artistavg {
+	
+	private String idartist;
+	private String rating;
+	
+	
+	
+	public Artistavg(String idartist, String rating) {
+		super();
+		this.idartist = idartist;
+		this.rating = rating;
+		
+
+	}
+
+	public String getIdartist() {
+		return idartist;
+	}
+
+	public void setIdartist(String idartist) {
+		this.idartist = idartist;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+	
+	
+	
+	
+	
+	
+
+
+	
+	@Override
+	public String toString() {
+		return String
+				.format("Artistavg [idartist=%s, rating=%s]",
+						idartist, rating);
+	}
+	
+	
+		
+}
+
+
+
